@@ -1,3 +1,10 @@
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+
 export default function Home() {
-  return <main className="text-green-600">hello, world</main>;
+  return (
+    <div>
+      <div>hello, world</div>
+      <ThemeSwitcher />
+    </div>
+  );
 }
