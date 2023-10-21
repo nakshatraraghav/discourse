@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { OAuthButtons } from "../oauth-buttons";
 
 export function LoginForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -86,6 +88,8 @@ export function LoginForm() {
         <Button size={"sm"} className="w-full mt-4">
           Submit
         </Button>
+        <Separator />
+        <OAuthButtons />
       </form>
     </Form>
   );
