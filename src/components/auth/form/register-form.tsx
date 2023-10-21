@@ -104,7 +104,7 @@ export function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button size={"sm"} className="w-full mt-4">
+        <Button size={"sm"} className="w-full mt-4" disabled={loading}>
           Submit
         </Button>
         <Separator />
