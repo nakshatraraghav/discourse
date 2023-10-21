@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { RegisterForm } from "@/components/auth/form/register-form";
 
 export default function RegisterPage() {
   return (
@@ -16,7 +17,9 @@ export default function RegisterPage() {
         <CardTitle>Create an Account</CardTitle>
         <CardDescription>Join us and get started!</CardDescription>
       </CardHeader>
-      <CardContent>Registration Form</CardContent>
+      <CardContent>
+        <RegisterForm />
+      </CardContent>
       <CardFooter className="flex space-x-2 text-sm text-muted-foreground">
         <div>Already have an account?</div>
         <Link href="/login" className="underline">
