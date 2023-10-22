@@ -1,12 +1,28 @@
 import { Greet } from "@/components/greet";
-import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { CreateServerModal } from "@/components/modal/create-server-modal";
 
-export default function Home() {
-  return (
-    <div>
-      <div>hello, world</div>
-      <ThemeSwitcher />
-      <Greet />
-    </div>
-  );
+import prisma from "@/server/db/prisma";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  const session = await getServerSession();
+
+  const id = session!.user.id;
+
+  const server = await prisma.server.findFirst({
+    where: {
+      members: {
+        some: {
+          id,
+        },
+      },
+    },
+  });
+
+  if (server) {
+    redirect(`server/${server.id}`);
+  }
+
+  return <CreateServerModal />;
 }
