@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     }
 
     return new NextResponse("User Created", {
-      status: 200,
+      status: 201,
     });
   } catch (error) {
     if (error instanceof ZodError) {
