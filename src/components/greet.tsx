@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Button } from "./ui/button";
+import { ThemeSwitcher } from "./theme/theme-switcher";
 
 export function Greet() {
   const { data: session } = useSession();
@@ -14,6 +15,7 @@ export function Greet() {
   return (
     <div>
       <div>hello {session?.user.username}</div>
+      <ThemeSwitcher />
       <Button
         onClick={() => {
           signOut();
