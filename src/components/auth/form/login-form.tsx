@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 import {
   loginSchema,
@@ -27,6 +28,8 @@ import { signIn } from "next-auth/react";
 
 export function LoginForm() {
   const [loading, setLoading] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const schema = useMemo(() => {
     return loginSchema;
@@ -63,6 +66,8 @@ export function LoginForm() {
       title: "Authentication Successfull.",
       description: "You have successfully logged in.",
     });
+
+    router.push("/");
 
     return;
   }
