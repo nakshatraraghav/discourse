@@ -15,13 +15,16 @@ model User {
   username      String?   @unique
   emailVerified DateTime?
   password      String?
-  image         String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  image         String?   @db.Text
 
   accounts Account[]
   sessions Session[]
+
+  servers Server[]
+  Member  Member[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([email])
   @@map("users")
@@ -41,10 +44,10 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -56,7 +59,8 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -75,4 +79,66 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+enum ChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+}
+
+model Server {
+  id         String @id @default(cuid())
+  name       String
+  image      String @db.Text
+  ownerId    String
+  inviteCode String
+
+  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  members  Member[]
+  channels Channel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerId])
+  @@map("server")
+}
+
+model Member {
+  id       String     @id @default(cuid())
+  role     MemberRole @default(GUEST)
+  userId   String
+  serverId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([serverId])
+  @@map("member")
+}
+
+model Channel {
+  id       String      @id @default(cuid())
+  name     String
+  type     ChannelType @default(TEXT)
+  serverId String
+
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([serverId])
+  @@map("channel")
 }
