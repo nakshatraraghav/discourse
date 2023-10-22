@@ -20,6 +20,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@t3-oss/env-nextjs": "^0.7.1",
+    "@uploadthing/react": "^5.7.0",
     "argon2": "^0.31.1",
     "axios": "^1.5.1",
     "class-variance-authority": "^0.7.0",
@@ -30,9 +31,11 @@
     "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.47.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^5.7.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
