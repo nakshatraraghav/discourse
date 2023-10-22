@@ -11,11 +11,14 @@ export function handleUserCreationResponse(status: number) {
     description: "There was a problem with your user creation request.",
   };
 
+  let success: boolean = false;
+
   switch (status) {
     case 201:
       response.variant = "default";
       response.title = "User Created";
       response.description = "Your user account was successfully created.";
+      success = true;
       break;
     case 400:
       response.title = "Invalid Request";
@@ -44,5 +47,5 @@ export function handleUserCreationResponse(status: number) {
       break;
   }
 
-  return response;
+  return { response, success };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -31,6 +31,8 @@ import { handleUserCreationResponse } from "@/lib/handle-status-code";
 export function RegisterForm() {
   const [loading, setLoading] = useState<boolean>(false);
 
+  const router = useRouter();
+
   const schema = useMemo(() => {
     return registerSchema;
   }, []);
@@ -47,15 +49,23 @@ export function RegisterForm() {
   const errors = form.formState.errors;
 
   async function onSubmit(data: registerBodyType) {
-    const { status } = await axios.post("/api/user/register", data);
+    const { status } = await fetch("/api/user/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+      cache: "no-cache",
+    });
 
-    const toastContent = handleUserCreationResponse(status);
+    const { response, success } = handleUserCreationResponse(status);
 
     toast({
-      variant: toastContent.variant,
-      title: toastContent.title,
-      description: toastContent.description,
+      variant: response.variant,
+      title: response.title,
+      description: response.description,
     });
+
+    if (success) {
+      router.push("/login");
+    }
   }
 
   return (

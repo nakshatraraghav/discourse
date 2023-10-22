@@ -11,7 +11,9 @@ export async function POST(request: Request) {
 
     const user = await findUserByEmail(body.email);
 
-    if (!user) {
+    console.log(user);
+
+    if (user) {
       return new NextResponse("User Already Exists", {
         status: 409,
       });

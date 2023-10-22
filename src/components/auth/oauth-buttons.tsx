@@ -44,6 +44,7 @@ export function OAuthButtons() {
         className="w-full"
         size={"sm"}
         disabled={loading.google}
+        onClick={() => handleOAuth("google")}
       >
         Google
       </Button>
@@ -52,6 +53,7 @@ export function OAuthButtons() {
         className="w-full"
         size={"sm"}
         disabled={loading.discord}
+        onClick={() => handleOAuth("discord")}
       >
         Discord
       </Button>
