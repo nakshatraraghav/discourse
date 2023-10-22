@@ -75,22 +75,13 @@ export const options: AuthOptions = {
   ],
   callbacks: {
     jwt: async ({ token, account, user }) => {
-      if (user) {
-        const dbuser = user as User;
-
-        token.username = dbuser.username;
-        token.id = dbuser.id;
-
-        return token;
-      }
-
       if (
         account &&
         (account.provider === "discord" || account.provider === "google")
       ) {
         const dbuser = user as User;
 
-        const generatedUsername = `${dbuser.username}_${nanoid(5)}`.replace(
+        const generatedUsername = `${dbuser.name}_${nanoid(5)}`.replace(
           " ",
           ""
         );
@@ -108,6 +99,17 @@ export const options: AuthOptions = {
         }
         token.username = update.username;
         token.id = update.id;
+
+        return token;
+      }
+
+      if (user) {
+        const dbuser = user as User;
+
+        token.username = dbuser.username;
+        token.id = dbuser.id;
+
+        return token;
       }
       return token;
     },
