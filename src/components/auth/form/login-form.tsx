@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/hooks/use-toast";
 
 import {
   loginSchema,
@@ -22,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { OAuthButtons } from "../oauth-buttons";
+import { signIn } from "next-auth/react";
 
 export function LoginForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,6 +31,8 @@ export function LoginForm() {
   const schema = useMemo(() => {
     return loginSchema;
   }, []);
+
+  const { toast } = useToast();
 
   const form = useForm<loginBodyType>({
     defaultValues: {
@@ -41,7 +45,26 @@ export function LoginForm() {
   const errors = form.formState.errors;
 
   async function onSubmit(data: loginBodyType) {
-    console.log(data);
+    const response = await signIn("credentials", {
+      ...data,
+      redirect: false,
+    });
+
+    if (!response?.ok) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
+      return;
+    }
+
+    toast({
+      title: "Authentication Successfull.",
+      description: "You have successfully logged in.",
+    });
+
+    return;
   }
 
   return (

@@ -1,7 +1,10 @@
 "use client";
 
+import axios from "axios";
+
 import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "@/hooks/use-toast";
 
 import {
   registerSchema,
@@ -23,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
+import { handleUserCreationResponse } from "@/lib/handle-status-code";
 
 export function RegisterForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,7 +47,15 @@ export function RegisterForm() {
   const errors = form.formState.errors;
 
   async function onSubmit(data: registerBodyType) {
-    console.log(data);
+    const { status } = await axios.post("/api/user/register", data);
+
+    const toastContent = handleUserCreationResponse(status);
+
+    toast({
+      variant: toastContent.variant,
+      title: toastContent.title,
+      description: toastContent.description,
+    });
   }
 
   return (
