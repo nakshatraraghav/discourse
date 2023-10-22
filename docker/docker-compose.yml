@@ -1,0 +1,11 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: my_mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env.docker
+    volumes:
+      - ~/.mysql-data:/var/lib/mysql
