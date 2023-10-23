@@ -7,7 +7,7 @@ export default function MainAppLayout({
 }) {
   return (
     <div className="">
-      <div className="hidden md:flex h-full w-[80px] z-10 flex-col fixed inset-y-0 border-r-2 border-r-[#111111]">
+      <div className="hidden md:flex h-full w-[80px] z-10 flex-col fixed inset-y-0 border-r-[2px] dark:border-r-[#111111]">
         <ServerNavigation />
       </div>
       <main className="md:pl-[80px] h-full">{children}</main>
