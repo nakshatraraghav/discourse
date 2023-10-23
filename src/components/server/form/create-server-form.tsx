@@ -1,10 +1,13 @@
 "use client";
 
-import { z } from "zod";
-
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
+import axios, { AxiosError } from "axios";
+
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createServerFormSchema as formSchema } from "@/server/schema/server/server.schema";
 
 import {
   Form,
@@ -18,21 +21,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/uploadthing/file-upload";
-
-const formSchema = z.object({
-  name: z
-    .string({
-      required_error: "Server name is required for Server Creation",
-      invalid_type_error: "Name has to be a String",
-    })
-    .min(6, "Server name should be longer than 6 characters")
-    .max(16, "Server name cannot be longer than 16 characters"),
-  image: z.string().min(1, "Server image is required"),
-});
+import { useToast } from "@/hooks/use-toast";
 
 type formData = z.infer<typeof formSchema>;
 
 export function CreateServerForm() {
+  const router = useRouter();
+
+  const { toast } = useToast();
+
   const form = useForm<formData>({
     defaultValues: {
       name: "",
@@ -44,8 +41,42 @@ export function CreateServerForm() {
   const loading = form.formState.isSubmitting;
   const errors = form.formState.errors;
 
-  function onSubmit(data: formData) {
-    console.log(FormData);
+  async function onSubmit(data: formData) {
+    try {
+      await axios.post("/api/server", data);
+
+      toast({
+        title: "Server Created",
+        description: "You can now add users to it.",
+      });
+
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        switch (error.status) {
+          case 401:
+            toast({
+              variant: "destructive",
+              title: "Unauthorized, Please Login",
+            });
+            break;
+          case 500:
+            toast({
+              variant: "destructive",
+              title: "Internal Server Error",
+              description: "Please try again later",
+            });
+        }
+      }
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Unknown Error",
+        description: "Please try again later",
+      });
+    }
   }
 
   return (
@@ -95,7 +126,7 @@ export function CreateServerForm() {
             </FormItem>
           )}
         />
-        <Button size={"sm"} className="w-full">
+        <Button size={"sm"} className="w-full" disabled={loading}>
           Submit
         </Button>
       </form>
