@@ -1,4 +1,3 @@
-import { Greet } from "@/components/greet";
 import { CreateServerModal } from "@/components/modal/create-server-modal";
 
 import prisma from "@/server/db/prisma";
