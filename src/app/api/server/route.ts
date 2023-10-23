@@ -5,33 +5,17 @@ import prisma from "@/server/db/prisma";
 import { getServerSession } from "next-auth";
 import { nanoid } from "nanoid";
 import { ChannelType, MemberRole } from "@prisma/client";
+import { options } from "@/server/auth";
 
 export async function POST(request: Request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(options);
 
     if (!session) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const email = session.user.email as string;
-
-    if (!email) {
-      console.log("EMAIL NOT ON TOKEN");
-      return;
-    }
-
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
-
-    if (!user) {
-      return new NextResponse("User Not Found", { status: 400 });
-    }
-
-    const id = user.id;
+    const id = session.user.id;
 
     const body = createServerFormSchema.parse(await request.json());
 
