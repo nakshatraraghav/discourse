@@ -38,7 +38,7 @@ export async function ServerNavigation() {
       <ScrollArea className="flex-1 w-full">
         {servers.map((server) => {
           return (
-            <div key={server.id} className="mb-4">
+            <div key={server.id} className="mb-6">
               <SidebarItem
                 id={server.id}
                 image={server.image}

@@ -26,8 +26,8 @@ export const SidebarItem = ({ id, image, name }: NavigationItemProps) => {
         <div
           className={cn(
             "absolute left-0 bg-primary rounded-r-full transition-all w-[4px]",
-            params?.serverId !== id && "group-hover:h-[20px]",
-            params?.serverId === id ? "h-[36px]" : "h-[8px]"
+            params?.id !== id && "group-hover:h-[20px]",
+            params?.id === id ? "h-[30px]" : "h-[8px]"
           )}
         />
         <div
