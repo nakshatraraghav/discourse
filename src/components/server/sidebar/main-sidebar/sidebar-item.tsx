@@ -27,7 +27,7 @@ export const SidebarItem = ({ id, image, name }: NavigationItemProps) => {
           className={cn(
             "absolute left-0 bg-neutral-700 dark:bg-neutral-300 rounded-r-full transition-all w-[4px]",
             params?.id !== id && "group-hover:h-[25px]",
-            params?.id === id ? "h-[35px]" : "h-[20px]"
+            params?.id === id ? "h-[35px]" : "h-[0px]"
           )}
         />
         <div
