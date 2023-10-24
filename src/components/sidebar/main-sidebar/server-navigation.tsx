@@ -33,7 +33,7 @@ export async function ServerNavigation() {
   });
 
   return (
-    <div className="bg-[#e3e5e8] dark:bg-stone-950 space-y-4 flex flex-col items-center h-full py-3">
+    <div className="bg-[#e3e5e8] dark:bg-[#13131331] space-y-4 flex flex-col items-center h-full py-3">
       <RenderSidebarActionWithSeparator />
       <ScrollArea className="flex-1 w-full">
         {servers.map((server) => {
