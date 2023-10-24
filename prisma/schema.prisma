@@ -98,7 +98,7 @@ model Server {
   name       String
   image      String @db.Text
   ownerId    String
-  inviteCode String
+  inviteCode String @unique
 
   owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   members  Member[]
