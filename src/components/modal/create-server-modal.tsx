@@ -1,7 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
 import {
   Dialog,
   DialogHeader,
@@ -11,19 +9,15 @@ import {
 } from "@/components/ui/dialog";
 import { CreateServerForm } from "../server/form/create-server-form";
 
+import { useModalStore } from "@/store/modal";
+
 export function CreateServerModal() {
-  const [mounted, setMounted] = useState<boolean>(false);
+  const { open, onClose, type } = useModalStore();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  const opened = type === "create-server" || open;
 
   return (
-    <Dialog open>
+    <Dialog open={opened} onOpenChange={() => onClose()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Your Server</DialogTitle>
