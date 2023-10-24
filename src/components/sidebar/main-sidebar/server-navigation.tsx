@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 
 import prisma from "@/server/db/prisma";
 
-import { ProfileDropdown } from "../dropdown/profile-dropdown";
-import { RenderSidebarActionWithSeparator } from "./main-sidebar/render-sidebar-action";
+import { ProfileDropdown } from "@/components/dropdown/profile-dropdown";
+import { RenderSidebarActionWithSeparator } from "./render-sidebar-action";
 import { Avatar } from "@/components/avatar/avatar";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
