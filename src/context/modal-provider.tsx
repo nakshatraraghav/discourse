@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 
 import { CreateServerModal } from "@/components/modal/create-server-modal";
+import { InvitePeopleModal } from "@/components/modal/invite-people";
 
 export function ModalProvider() {
   const [mounted, setMounted] = React.useState<boolean>(false);
@@ -17,7 +18,8 @@ export function ModalProvider() {
 
   return (
     <React.Fragment>
-      <CreateServerModal />
+      {<CreateServerModal />}
+      {<InvitePeopleModal />}
     </React.Fragment>
   );
 }

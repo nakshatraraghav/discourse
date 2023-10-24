@@ -33,6 +33,7 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
   if (!server) {
     redirect("/");
   }
+  const { channels, members, ...serverDetails } = server;
 
   const text = server.channels.filter(
     (channel) => channel.type === ChannelType.TEXT
@@ -52,7 +53,7 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
 
   return (
     <div className="h-full flex flex-col text-primary bg-[#f2f3f5] dark:bg-[#1515158e]">
-      <ServerSidebarHeader server={server} role={userRole} />
+      <ServerSidebarHeader server={serverDetails} role={userRole} />
     </div>
   );
 }

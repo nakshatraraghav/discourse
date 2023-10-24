@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MemberRole } from "@prisma/client";
+import { MemberRole, Server } from "@prisma/client";
 
 import {
   PersonIcon,
@@ -20,17 +20,22 @@ import {
   ExitIcon,
   TrashIcon,
 } from "@radix-ui/react-icons";
+import { useModalStore } from "@/store/modal";
 
 interface SidebarHeaderDropdownProps {
   children: React.ReactNode;
   role: MemberRole;
+  server: Server;
 }
 
 export function SidebarDropdown({
   children,
   role,
+  server,
 }: SidebarHeaderDropdownProps) {
   const [mounted, setMounted] = useState<boolean>(false);
+
+  const { onOpen } = useModalStore();
 
   useEffect(() => {
     setMounted(true);
@@ -54,7 +59,14 @@ export function SidebarDropdown({
         <DropdownMenuLabel>Server Options</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {moderator && (
-          <DropdownMenuItem className="text-blue-500">
+          <DropdownMenuItem
+            className="text-blue-500"
+            onClick={() => {
+              onOpen("invite-people", {
+                server: server,
+              });
+            }}
+          >
             <div className="flex w-full justify-between items-center">
               Invite People
               <PersonIcon />

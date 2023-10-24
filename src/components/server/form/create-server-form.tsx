@@ -70,7 +70,6 @@ export function CreateServerForm() {
             });
         }
       }
-      console.log(error);
       toast({
         variant: "destructive",
         title: "Unknown Error",

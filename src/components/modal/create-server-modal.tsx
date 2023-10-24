@@ -14,7 +14,7 @@ import { useModalStore } from "@/store/modal";
 export function CreateServerModal() {
   const { open, onClose, type } = useModalStore();
 
-  const opened = type === "create-server" || open;
+  const opened = type === "create-server" && open;
 
   return (
     <Dialog open={opened} onOpenChange={() => onClose()}>
