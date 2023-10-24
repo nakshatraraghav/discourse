@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/context/theme-provider";
 import { SessionProvider } from "@/context/session-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { getServerSession } from "next-auth";
+import { ModalProvider } from "@/context/modal-provider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default async function RootLayout({
           <ThemeProvider>
             {children}
             <Toaster />
+            <ModalProvider />
           </ThemeProvider>
         </SessionProvider>
       </body>
