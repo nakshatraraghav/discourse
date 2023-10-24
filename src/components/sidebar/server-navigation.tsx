@@ -35,15 +35,16 @@ export async function ServerNavigation() {
   return (
     <div className="bg-[#e3e5e8] dark:bg-stone-950 space-y-4 flex flex-col items-center h-full py-3">
       <RenderSidebarActionWithSeparator />
-      <ScrollArea className="h-full">
+      <ScrollArea className="flex-1 w-full">
         {servers.map((server) => {
           return (
-            <SidebarItem
-              id={server.id}
-              image={server.image}
-              name={server.name}
-              key={server.id}
-            />
+            <div key={server.id} className="mb-4">
+              <SidebarItem
+                id={server.id}
+                image={server.image}
+                name={server.name}
+              />
+            </div>
           );
         })}
       </ScrollArea>
