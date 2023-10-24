@@ -27,6 +27,7 @@
     "axios": "^1.5.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "cmdk": "^0.2.0",
     "nanoid": "^5.0.2",
     "next": "13.5.6",
     "next-auth": "^4.24.3",
