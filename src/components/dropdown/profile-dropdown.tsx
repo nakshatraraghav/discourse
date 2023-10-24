@@ -42,7 +42,7 @@ export function ProfileDropdown({ children }: ProfileDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" side="right" align="start">
+      <DropdownMenuContent className="w-56" side="right" align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -64,7 +64,7 @@ export function ProfileDropdown({ children }: ProfileDropdownProps) {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Theme Mode</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent>
+              <DropdownMenuSubContent className="w-32">
                 <DropdownMenuItem onClick={() => setTheme("dark")}>
                   <div className="flex w-full justify-between items-center">
                     Dark

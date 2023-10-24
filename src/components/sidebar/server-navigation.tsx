@@ -1,16 +1,26 @@
-import Image from "next/image";
-import prisma from "@/server/db/prisma";
-
 import { options } from "@/server/auth";
 import { getServerSession } from "next-auth";
-import { SidebarAction } from "./sidebar-action";
-import { Separator } from "@radix-ui/react-separator";
-import { RenderSidebarAction } from "./render-sidebar-action";
+import { redirect } from "next/navigation";
+
+import prisma from "@/server/db/prisma";
+
+import { ProfileDropdown } from "../dropdown/profile-dropdown";
+import { RenderSidebarActionWithSeparator } from "./render-sidebar-action";
+import { Avatar } from "@/components/avatar/avatar";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { SidebarItem } from "./sidebar-item";
 
 export async function ServerNavigation() {
   const session = await getServerSession(options);
 
-  const id = session!.user.id;
+  if (!session) {
+    redirect("/login");
+  }
+
+  const {
+    user: { image, id },
+  } = session;
 
   const servers = await prisma.server.findMany({
     where: {
@@ -24,20 +34,22 @@ export async function ServerNavigation() {
 
   return (
     <div className="bg-[#e3e5e8] dark:bg-stone-950 space-y-4 flex flex-col items-center h-full py-3">
-      <RenderSidebarAction />
-      {servers.map((server) => {
-        return (
-          <div key={server.id}>
-            <Image
-              src={server.image}
-              alt="server logo"
+      <RenderSidebarActionWithSeparator />
+      <ScrollArea className="h-full">
+        {servers.map((server) => {
+          return (
+            <SidebarItem
+              id={server.id}
+              image={server.image}
+              name={server.name}
               key={server.id}
-              height={40}
-              width={40}
             />
-          </div>
-        );
-      })}
+          );
+        })}
+      </ScrollArea>
+      <ProfileDropdown>
+        <Avatar image={image ?? ""} />
+      </ProfileDropdown>
     </div>
   );
 }
