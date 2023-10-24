@@ -88,7 +88,13 @@ export function SidebarDropdown({
           </DropdownMenuItem>
         )}
         {moderator && (
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              onOpen("manage-members", {
+                server,
+              })
+            }
+          >
             <div className="flex w-full justify-between items-center">
               Manage Members
               <AvatarIcon />
