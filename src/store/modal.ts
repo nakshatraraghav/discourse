@@ -5,7 +5,8 @@ type ModalType =
   | "create-server"
   | "invite-people"
   | "edit-server"
-  | "manage-members";
+  | "manage-members"
+  | "create-channel";
 
 type ModalData = {
   server?: Server;

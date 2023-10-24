@@ -103,7 +103,13 @@ export function SidebarDropdown({
         )}
         {moderator && (
           <React.Fragment>
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                onOpen("create-channel", {
+                  server,
+                })
+              }
+            >
               <div className="flex w-full justify-between items-center">
                 Create Channel
                 <PlusIcon />
