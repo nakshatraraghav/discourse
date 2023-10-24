@@ -1,4 +1,4 @@
-import { CreateServerModal } from "@/components/modal/create-server-modal";
+import { CreateServerModal } from "@/components/modal/initial-modal";
 
 import prisma from "@/server/db/prisma";
 import { getServerSession } from "next-auth";
