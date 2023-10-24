@@ -1,8 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
+
 import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 import {
   DropdownMenu,
@@ -13,7 +15,13 @@ import {
   DropdownMenuTrigger,
   DropdownMenuGroup,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu";
+
+import { SunIcon, MoonIcon, LaptopIcon } from "@radix-ui/react-icons";
 
 interface ProfileDropdownProps {
   children: React.ReactNode;
@@ -22,6 +30,8 @@ interface ProfileDropdownProps {
 export function ProfileDropdown({ children }: ProfileDropdownProps) {
   const router = useRouter();
   const { data: session } = useSession();
+
+  const { setTheme } = useTheme();
 
   if (!session) {
     router.push("/login");
@@ -32,7 +42,7 @@ export function ProfileDropdown({ children }: ProfileDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className="w-56" side="right" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -48,6 +58,34 @@ export function ProfileDropdown({ children }: ProfileDropdownProps) {
             Keyboard shortcuts
             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
           </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Theme Mode</DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  <div className="flex w-full justify-between items-center">
+                    Dark
+                    <MoonIcon />
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  <div className="flex w-full justify-between items-center">
+                    Light
+                    <SunIcon />
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  <div className="flex w-full justify-between items-center">
+                    System
+                    <LaptopIcon />
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>Log Out</DropdownMenuItem>
