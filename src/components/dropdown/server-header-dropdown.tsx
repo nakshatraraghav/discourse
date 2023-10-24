@@ -74,7 +74,13 @@ export function SidebarDropdown({
           </DropdownMenuItem>
         )}
         {admin && (
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              onOpen("edit-server", {
+                server: server,
+              })
+            }
+          >
             <div className="flex w-full justify-between items-center">
               Server Settings
               <GearIcon />
