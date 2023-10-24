@@ -5,5 +5,9 @@ export default function ServerPage({
     id: string;
   };
 }) {
-  return <div>server id is: {params.id}</div>;
+  return (
+    <div className="bg-[#ffffff] dark:bg-[#36363837] w-full h-screen">
+      server id is: {params.id}
+    </div>
+  );
 }

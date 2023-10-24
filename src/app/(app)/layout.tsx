@@ -1,4 +1,4 @@
-import { ServerNavigation } from "@/components/sidebar/main-sidebar/server-navigation";
+import { ServerNavigation } from "@/components/server/sidebar/main-sidebar/server-navigation";
 
 export default function MainAppLayout({
   children,

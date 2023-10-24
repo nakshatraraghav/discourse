@@ -88,7 +88,9 @@ export function ProfileDropdown({ children }: ProfileDropdownProps) {
           </DropdownMenuSub>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>Log Out</DropdownMenuItem>
+        <DropdownMenuItem className="text-red-500" onClick={() => signOut()}>
+          Log Out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
