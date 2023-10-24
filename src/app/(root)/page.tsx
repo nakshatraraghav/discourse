@@ -13,7 +13,7 @@ export default async function Home() {
     where: {
       members: {
         some: {
-          id,
+          userId: id,
         },
       },
     },
