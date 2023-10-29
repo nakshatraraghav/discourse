@@ -7,8 +7,6 @@ import Image from "next/image";
 
 import { Cross2Icon } from "@radix-ui/react-icons";
 
-import { utapi } from "@/server/uploadthing";
-
 interface FileUploadProps {
   endpoint: "serverLogo" | "messageFile";
   value: string;

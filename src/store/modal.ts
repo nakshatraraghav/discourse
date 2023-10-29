@@ -13,7 +13,7 @@ type ModalData = {
 };
 
 type ModalStore = {
-  type: ModalType | null;
+  type: ModalType | null | undefined;
   open: boolean;
   data: ModalData;
   onOpen: (type: ModalType, data: ModalData) => void;
@@ -24,7 +24,7 @@ export const useModalStore = create<ModalStore>((set) => ({
   type: null,
   open: false,
   data: {},
-  onOpen: (type: ModalType, modalData: ModalData = {}) =>
+  onOpen: (type: ModalType, modalData: ModalData | undefined = {}) =>
     set({
       type,
       open: true,
