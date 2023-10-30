@@ -1,10 +1,11 @@
-import { MemberRole, Server } from "@prisma/client";
+import { Channel, Member, MemberRole, Server, User } from "@prisma/client";
 
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { SidebarDropdown } from "@/components/dropdown/server-header-dropdown";
+import { ServerWithMembersWithUser } from "../../../../../types";
 
 interface ServerSidebarHeaderProps {
-  server: Server;
+  server: ServerWithMembersWithUser;
   role: MemberRole;
 }
 

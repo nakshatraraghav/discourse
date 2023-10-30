@@ -23,6 +23,9 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
         },
       },
       members: {
+        include: {
+          user: true,
+        },
         orderBy: {
           role: "asc",
         },
@@ -33,8 +36,6 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
   if (!server) {
     redirect("/");
   }
-  const { channels, members, ...serverDetails } = server;
-
   const text = server.channels.filter(
     (channel) => channel.type === ChannelType.TEXT
   );
@@ -52,8 +53,8 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
   )!.role;
 
   return (
-    <div className="h-full flex flex-col text-primary bg-[#f2f3f5] dark:bg-[#15151590]">
-      <ServerSidebarHeader server={serverDetails} role={userRole} />
+    <div className="h-full flex flex-col text-primary bg-[#f2f3f5] dark:bg-[#32323219]">
+      <ServerSidebarHeader server={server} role={userRole} />
     </div>
   );
 }
