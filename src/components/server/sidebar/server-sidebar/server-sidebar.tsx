@@ -52,7 +52,7 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
   )!.role;
 
   return (
-    <div className="h-full flex flex-col text-primary bg-[#f2f3f5] dark:bg-[#1515158e]">
+    <div className="h-full flex flex-col text-primary bg-[#f2f3f5] dark:bg-[#15151590]">
       <ServerSidebarHeader server={serverDetails} role={userRole} />
     </div>
   );
