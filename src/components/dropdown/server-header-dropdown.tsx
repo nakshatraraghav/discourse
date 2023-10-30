@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MemberRole, Server } from "@prisma/client";
+import { MemberRole } from "@prisma/client";
 
 import {
   PersonIcon,
@@ -21,11 +21,12 @@ import {
   TrashIcon,
 } from "@radix-ui/react-icons";
 import { useModalStore } from "@/store/modal";
+import { ServerWithMembersWithUser } from "../../../types";
 
 interface SidebarHeaderDropdownProps {
   children: React.ReactNode;
   role: MemberRole;
-  server: Server;
+  server: ServerWithMembersWithUser;
 }
 
 export function SidebarDropdown({
