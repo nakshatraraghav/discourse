@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useOrigin } from "@/hooks/use-origin";
-import { useToast } from "@/hooks/use-toast";
+import { useMemo } from "react";
 
 import {
   Dialog,
@@ -12,10 +10,19 @@ import {
 } from "@/components/ui/dialog";
 
 import { useModalStore } from "@/store/modal";
+import { CreateChannelForm } from "../server/form/create-channel-form";
 
 export function CreateChannelModal() {
-  const { open, onClose, type } = useModalStore();
+  const { open, onClose, type, data } = useModalStore();
   const opened = type === "create-channel" && open;
+
+  const server = useMemo(() => {
+    return data.server;
+  }, [data.server]);
+
+  if (!server) {
+    return null;
+  }
 
   return (
     <Dialog open={opened} onOpenChange={() => onClose()}>
@@ -23,6 +30,7 @@ export function CreateChannelModal() {
         <DialogHeader>
           <DialogTitle>Create Server Channels</DialogTitle>
         </DialogHeader>
+        <CreateChannelForm serverId={server.id} />
       </DialogContent>
     </Dialog>
   );
