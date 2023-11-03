@@ -68,6 +68,9 @@ dependencies:
   cmdk:
     specifier: ^0.2.0
     version: 0.2.0(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+  lucide-react:
+    specifier: ^0.292.0
+    version: 0.292.0(react@18.2.0)
   nanoid:
     specifier: ^5.0.2
     version: 5.0.2
@@ -3108,6 +3111,14 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+
+  /lucide-react@0.292.0(react@18.2.0):
+    resolution: {integrity: sha512-rRgUkpEHWpa5VCT66YscInCQmQuPCB1RFRzkkxMxg4b+jaL0V12E3riWWR2Sh5OIiUhCwGW/ZExuEO4Az32E6Q==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /make-dir@3.1.0:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
