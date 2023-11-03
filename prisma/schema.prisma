@@ -122,6 +122,7 @@ model Member {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([serverId, userId])
   @@index([userId])
   @@index([serverId])
   @@map("member")
