@@ -4,6 +4,7 @@ import prisma from "@/server/db/prisma";
 import { ChannelType } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { ServerSearch } from "./server-search";
 
 export async function ServerSidebar({ serverId }: { serverId: string }) {
   const session = await getServerSession(options);
@@ -55,6 +56,10 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
   return (
     <div className="h-full flex flex-col text-primary bg-[#f2f3f5] dark:bg-[#32323219]">
       <ServerSidebarHeader server={server} role={userRole} />
+      <ServerSearch
+        channels={{ text, audio, video }}
+        members={server.members}
+      />
     </div>
   );
 }
