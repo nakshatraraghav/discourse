@@ -32,9 +32,12 @@ import { Button } from "@/components/ui/button";
 import { ChannelType } from "@prisma/client";
 import axios from "axios";
 import { useModalStore } from "@/store/modal";
+import { useToast } from "@/hooks/use-toast";
 
 export function CreateChannelForm({ serverId }: { serverId: string }) {
   const router = useRouter();
+
+  const { toast } = useToast();
 
   const { onClose } = useModalStore();
 
@@ -59,7 +62,16 @@ export function CreateChannelForm({ serverId }: { serverId: string }) {
       form.reset();
       router.refresh();
       onClose();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+
+      toast({
+        variant: "destructive",
+        title: "Channel Creation Failed",
+        description:
+          "There has been an error while creating the channel please try again later.",
+      });
+    }
   }
 
   return (
