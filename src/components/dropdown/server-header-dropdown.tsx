@@ -120,14 +120,26 @@ export function SidebarDropdown({
           </React.Fragment>
         )}
         {admin ? (
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              onOpen("delete-server", {
+                server,
+              });
+            }}
+          >
             <div className="flex w-full justify-between items-center text-red-500">
               Delete Server
               <TrashIcon />
             </div>
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              onOpen("leave-server", {
+                server,
+              });
+            }}
+          >
             <div className="flex w-full justify-between items-center text-red-500">
               Leave Server
               <ExitIcon />

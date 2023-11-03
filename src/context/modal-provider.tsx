@@ -7,6 +7,8 @@ import { InvitePeopleModal } from "@/components/modal/invite-people";
 import { EditServerModal } from "@/components/modal/edit-server-modal";
 import { ManageMembersModal } from "@/components/modal/manage-members";
 import { CreateChannelModal } from "@/components/modal/create-channel-modal";
+import { LeaveServerModal } from "@/components/modal/leave-server-modal";
+import { DeleteServerModal } from "@/components/modal/delete-server-modal";
 
 export function ModalProvider() {
   const [mounted, setMounted] = React.useState<boolean>(false);
@@ -26,6 +28,8 @@ export function ModalProvider() {
       <EditServerModal />
       <ManageMembersModal />
       <CreateChannelModal />
+      <LeaveServerModal />
+      <DeleteServerModal />
     </React.Fragment>
   );
 }

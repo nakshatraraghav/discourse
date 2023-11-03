@@ -7,7 +7,9 @@ type ModalType =
   | "invite-people"
   | "edit-server"
   | "manage-members"
-  | "create-channel";
+  | "create-channel"
+  | "leave-server"
+  | "delete-server";
 
 type ModalData = {
   server?: ServerWithMembersWithUser;
