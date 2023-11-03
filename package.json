@@ -32,7 +32,7 @@
     "cmdk": "^0.2.0",
     "lucide-react": "^0.292.0",
     "nanoid": "^5.0.2",
-    "next": "14.0.0",
+    "next": "14.0.1",
     "next-auth": "^4.24.4",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
@@ -41,13 +41,13 @@
     "react-hook-form": "^7.47.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^5.7.2",
+    "uploadthing": "^5.7.4",
     "zod": "^3.22.4",
-    "zustand": "^4.4.4"
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
-    "@types/node": "^20.8.9",
-    "@types/react": "^18.2.33",
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.34",
     "@types/react-dom": "^18.2.14",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.52.0",
