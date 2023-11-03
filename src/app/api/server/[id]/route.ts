@@ -65,3 +65,46 @@ export async function PATCH(
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    if (!params.id) {
+      return new NextResponse("Server ID Undefined", { status: 400 });
+    }
+
+    const session = await getServerSession(options);
+
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const member = await prisma.member.findFirst({
+      where: {
+        serverId: params.id,
+        userId: session.user.id,
+      },
+    });
+
+    if (!member || member.role !== "ADMIN") {
+      return new NextResponse("Unauthorized", { status: 403 });
+    }
+
+    const deleted = await prisma.server.delete({
+      where: {
+        id: params.id,
+      },
+    });
+
+    if (!deleted) {
+      return new NextResponse("Server Deletion Failed", { status: 500 });
+    }
+
+    return new NextResponse("Server Deleted", { status: 200 });
+  } catch (error) {
+    console.log("[DELETE /api/server/:serverId ERROR]", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
