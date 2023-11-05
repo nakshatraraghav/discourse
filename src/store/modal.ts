@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { ServerWithMembersWithUser } from "../../types";
 
-type ModalType =
+export type ModalType =
   | "create-server"
   | "invite-people"
   | "edit-server"
