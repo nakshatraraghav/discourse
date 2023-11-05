@@ -1,10 +1,17 @@
-import { ServerSidebarHeader } from "@/components/server/sidebar/server-sidebar/server-sidebar-header";
+import { getServerSession } from "next-auth";
 import { options } from "@/server/auth";
+import { redirect } from "next/navigation";
+
 import prisma from "@/server/db/prisma";
 import { ChannelType } from "@prisma/client";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+
+import { ServerSidebarHeader } from "@/components/server/sidebar/server-sidebar/server-sidebar-header";
 import { ServerSearch } from "./server-search";
+
+import { Separator } from "@/components/ui/separator";
+import { ServerSection } from "./server-section";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ServerMembersChannels } from "./server-members-channels";
 
 export async function ServerSidebar({ serverId }: { serverId: string }) {
   const session = await getServerSession(options);
@@ -59,6 +66,12 @@ export async function ServerSidebar({ serverId }: { serverId: string }) {
       <ServerSearch
         channels={{ text, audio, video }}
         members={server.members}
+      />
+      <Separator />
+      <ServerMembersChannels
+        role={userRole}
+        server={server}
+        channels={{ text, audio, video }}
       />
     </div>
   );

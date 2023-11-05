@@ -73,7 +73,7 @@ export function ServerSearch({ channels, members }: ServerSearchProps) {
         }}
       >
         <Search className="h-3 w-3" />
-        <div className="w-full flex items-center font-semibold text-[14px]">
+        <div className="w-full flex items-center font-semibold text-[12px]">
           <p>Search</p>
           <kbd></kbd>
           <kbd className="ml-auto mr-3 text-[12px] bg-[#232222] py-[3px] px-2 rounded-md">
