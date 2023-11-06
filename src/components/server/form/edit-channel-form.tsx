@@ -87,12 +87,11 @@ export function EditChannellForm({
               <FormControl>
                 <Input placeholder="new-channel-name" {...field} />
               </FormControl>
-              {!errors["name"] && (
+              {!errors && (
                 <FormDescription>
                   This is your public display name.
                 </FormDescription>
               )}
-              <FormMessage />
             </FormItem>
           )}
         />

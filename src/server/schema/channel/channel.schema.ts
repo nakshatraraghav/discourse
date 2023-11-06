@@ -16,9 +16,11 @@ export const deleteChannelServerSchema = z.object({
   serverId: z.string(),
 });
 
-export const editChanneFormSchema = z.object({
-  name: z.string(),
-});
+export const editChanneFormSchema = z
+  .object({
+    name: z.string(),
+  })
+  .refine((data) => data.name == "general" && typeof data.name === "undefined");
 
 export const editChannelServerSchema = z.object({
   name: z.string(),
