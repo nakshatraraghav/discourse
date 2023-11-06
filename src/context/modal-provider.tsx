@@ -9,6 +9,8 @@ import { ManageMembersModal } from "@/components/modal/manage-members";
 import { CreateChannelModal } from "@/components/modal/create-channel-modal";
 import { LeaveServerModal } from "@/components/modal/leave-server-modal";
 import { DeleteServerModal } from "@/components/modal/delete-server-modal";
+import { EditChannelModal } from "@/components/modal/edit-channel-modal";
+import { DeleteChannelModal } from "@/components/modal/delete-channel-modal";
 
 export function ModalProvider() {
   const [mounted, setMounted] = React.useState<boolean>(false);
@@ -30,6 +32,8 @@ export function ModalProvider() {
       <CreateChannelModal />
       <LeaveServerModal />
       <DeleteServerModal />
+      <EditChannelModal />
+      <DeleteChannelModal />
     </React.Fragment>
   );
 }

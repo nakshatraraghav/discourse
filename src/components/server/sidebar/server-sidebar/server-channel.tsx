@@ -42,7 +42,7 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
 
   const onAction = (e: React.MouseEvent, modal: ModalType) => {
     e.stopPropagation();
-    onOpen(modal, { server });
+    onOpen(modal, { server, channel });
   };
 
   return (
@@ -71,13 +71,17 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
           <div className="flex items-center space-x-2">
             <Tooltip label="Edit Channel" side="right" align="center">
               <Edit
-                onClick={(ev) => {}}
+                onClick={(ev) => {
+                  onAction(ev, "edit-channel");
+                }}
                 className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
               />
             </Tooltip>
             <Tooltip label="Delete Channel" side="right" align="center">
               <Trash2
-                onClick={(ev) => {}}
+                onClick={(ev) => {
+                  onAction(ev, "delete-channel");
+                }}
                 className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
               />
             </Tooltip>
