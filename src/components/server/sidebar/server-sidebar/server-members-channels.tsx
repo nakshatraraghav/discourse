@@ -1,3 +1,5 @@
+import React from "react";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ServerSection } from "./server-section";
 
@@ -27,53 +29,70 @@ export function ServerMembersChannels({
   return (
     <ScrollArea>
       {text.length > 0 && (
-        <ServerSection
-          label="Text Channels"
-          sectionType="channels"
-          role={role}
-          server={server}
-        />
+        <React.Fragment>
+          <ServerSection
+            label="Text Channels"
+            sectionType="channels"
+            role={role}
+            server={server}
+          />
+
+          {text.map((channel) => {
+            return (
+              <ServerChannel
+                key={channel.id}
+                channel={channel}
+                server={server}
+              />
+            );
+          })}
+
+          <Separator className="mt-2" />
+        </React.Fragment>
       )}
-      {text.map((channel) => {
-        return (
-          <ServerChannel key={channel.id} channel={channel} server={server} />
-        );
-      })}
-
-      <Separator className="mt-2" />
-
       {audio.length > 0 && (
-        <ServerSection
-          label="Audio Channels"
-          sectionType="channels"
-          role={role}
-          server={server}
-        />
-      )}
-      {audio.map((channel) => {
-        return (
-          <ServerChannel key={channel.id} channel={channel} server={server} />
-        );
-      })}
+        <React.Fragment>
+          <ServerSection
+            label="Audio Channels"
+            sectionType="channels"
+            role={role}
+            server={server}
+          />
 
-      <Separator className="mt-2" />
+          {audio.map((channel) => {
+            return (
+              <ServerChannel
+                key={channel.id}
+                channel={channel}
+                server={server}
+              />
+            );
+          })}
+          <Separator className="mt-2" />
+        </React.Fragment>
+      )}
 
       {video.length > 0 && (
-        <ServerSection
-          label="Video Channels"
-          sectionType="channels"
-          role={role}
-          server={server}
-        />
+        <React.Fragment>
+          <ServerSection
+            label="Video Channels"
+            sectionType="channels"
+            role={role}
+            server={server}
+          />
+          {video.map((channel) => {
+            return (
+              <ServerChannel
+                key={channel.id}
+                channel={channel}
+                server={server}
+              />
+            );
+          })}
+
+          <Separator className="mt-2" />
+        </React.Fragment>
       )}
-      {video.map((channel) => {
-        return (
-          <ServerChannel key={channel.id} channel={channel} server={server} />
-        );
-      })}
-
-      <Separator className="mt-2" />
-
       <ServerSection
         label="Members"
         sectionType="members"

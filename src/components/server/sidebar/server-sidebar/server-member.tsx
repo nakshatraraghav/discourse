@@ -35,13 +35,13 @@ export function ServerMember({ member, server, role }: ServerMemberProps) {
       onClick={onClick}
       variant={"ghost"}
       size={"sm"}
-      className={"group rounded-md gap-x-2 w-full mb-1"}
+      className="group rounded-md gap-x-2 w-full mb-1 truncate"
     >
       <div className="w-full flex items-center space-x-1">
         <Icon className="text-zinc-500" size="15" />
         <p
           className={cn(
-            "font-semibold truncate text-[13px] text-zinc-500 group-hover:text-neutral-300"
+            "font-semibold truncate pr-4 text-[13px] text-zinc-500 group-hover:text-neutral-300"
           )}
         >
           {member.user.username}
