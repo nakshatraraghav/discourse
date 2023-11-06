@@ -1,11 +1,13 @@
 "use client";
 
+import React from "react";
+
 import { useParams, useRouter } from "next/navigation";
 
 import { Channel, ChannelType, MemberRole } from "@prisma/client";
 import { ServerWithMembersWithUser } from "../../../../../types";
 
-import { Edit, Hash, Mic, Video } from "lucide-react";
+import { Delete, Edit, Hash, Mic, Trash2, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -66,12 +68,20 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
           </p>
         </div>
         {moderator && channel.name !== "general" && (
-          <Tooltip label="Edit Channel" side="right" align="center">
-            <Edit
-              onClick={(ev) => {}}
-              className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
-            />
-          </Tooltip>
+          <div className="flex items-center space-x-2">
+            <Tooltip label="Edit Channel" side="right" align="center">
+              <Edit
+                onClick={(ev) => {}}
+                className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
+              />
+            </Tooltip>
+            <Tooltip label="Delete Channel" side="right" align="center">
+              <Trash2
+                onClick={(ev) => {}}
+                className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
+              />
+            </Tooltip>
+          </div>
         )}
         {channel.name === "general" && (
           <Tooltip
