@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Tooltip } from "@/components/ui/tooltip";
 import { ModalType, useModalStore } from "@/store/modal";
+import { LockClosedIcon } from "@radix-ui/react-icons";
 
 interface ServerChannelProps {
   channel: Channel;
@@ -70,6 +71,15 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
               onClick={(ev) => {}}
               className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
             />
+          </Tooltip>
+        )}
+        {channel.name === "general" && (
+          <Tooltip
+            label="Cannot edit general channel"
+            side="right"
+            align="center"
+          >
+            <LockClosedIcon className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition" />
           </Tooltip>
         )}
       </div>
