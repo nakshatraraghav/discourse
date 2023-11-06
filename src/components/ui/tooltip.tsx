@@ -24,7 +24,7 @@ export function Tooltip({ align, children, label, side }: TooltipProps) {
           align={align}
           className="bg-white text-black dark:bg-zinc-900 dark:text-white"
         >
-          <p className="font-semibold text text-sm ">{label}</p>
+          <p className="text text-sm ">{label}</p>
         </TooltipContent>
       </UiTooltip>
     </TooltipProvider>
