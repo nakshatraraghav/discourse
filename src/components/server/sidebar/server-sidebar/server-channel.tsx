@@ -52,21 +52,23 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
         params.channelId === channel.id && "bg-zinc-700/20 dark:bg-zinc-700"
       )}
     >
-      <div className="w-full flex items-center space-x-1">
-        <Icon className="text-zinc-500" size="15" />
-        <p
-          className={cn(
-            "font-semibold text-[13px] text-zinc-500 group-hover:text-neutral-300",
-            params.channelId === channel.id && "text-primary"
-          )}
-        >
-          {channel.name}
-        </p>
+      <div className="w-full flex items-center justify-between pr-4">
+        <div className="flex items-center space-x-1">
+          <Icon className="text-zinc-500 group-hover:text-zinc-300" size="15" />
+          <p
+            className={cn(
+              "font-semibold text-[13px] text-zinc-500 group-hover:text-neutral-300",
+              params.channelId === channel.id && "text-primary"
+            )}
+          >
+            {channel.name}
+          </p>
+        </div>
         {moderator && channel.name !== "general" && (
-          <Tooltip label="Edit Channel">
+          <Tooltip label="Edit Channel" side="right" align="center">
             <Edit
               onClick={(ev) => {}}
-              className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
+              className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
             />
           </Tooltip>
         )}

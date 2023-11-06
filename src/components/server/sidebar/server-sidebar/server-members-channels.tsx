@@ -42,6 +42,7 @@ export function ServerMembersChannels({
               <ServerChannel
                 key={channel.id}
                 channel={channel}
+                role={role}
                 server={server}
               />
             );
@@ -64,6 +65,7 @@ export function ServerMembersChannels({
               <ServerChannel
                 key={channel.id}
                 channel={channel}
+                role={role}
                 server={server}
               />
             );
@@ -85,6 +87,7 @@ export function ServerMembersChannels({
               <ServerChannel
                 key={channel.id}
                 channel={channel}
+                role={role}
                 server={server}
               />
             );

@@ -38,13 +38,14 @@ export function ServerSection({
           <Button
             size={"icon"}
             variant={"ghost"}
+            className="group"
             onClick={() => {
               onOpen("create-channel", {
                 server,
               });
             }}
           >
-            <PlusIcon className="text-zinc-500" />
+            <PlusIcon className="text-zinc-500 group-hover:text-zinc-300" />
           </Button>
         </Tooltip>
       )}
@@ -53,14 +54,14 @@ export function ServerSection({
           <Button
             size={"icon"}
             variant={"ghost"}
-            className="p-[9px]"
+            className="p-[9px] group"
             onClick={() => {
               onOpen("manage-members", {
                 server,
               });
             }}
           >
-            <Cog className="text-zinc-500" />
+            <Cog className="text-zinc-500 group-hover:text-zinc-300" />
           </Button>
         </Tooltip>
       )}
