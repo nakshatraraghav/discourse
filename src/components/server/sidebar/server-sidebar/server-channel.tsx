@@ -93,7 +93,12 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
             side="right"
             align="center"
           >
-            <LockClosedIcon className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition" />
+            <LockClosedIcon
+              onClick={(ev) => {
+                ev.stopPropagation();
+              }}
+              className="hidden group-hover:block w-4 h-4 text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
+            />
           </Tooltip>
         )}
       </div>
