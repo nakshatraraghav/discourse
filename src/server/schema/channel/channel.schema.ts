@@ -12,4 +12,18 @@ export const createChannelServerSchema = z.object({
   serverId: z.string(),
 });
 
+export const deleteChannelServerSchema = z.object({
+  serverId: z.string(),
+});
+
+export const editChanneFormSchema = z.object({
+  name: z.string(),
+});
+
+export const editChannelServerSchema = z.object({
+  name: z.string(),
+  serverId: z.string(),
+});
+
 export type formSchemaType = z.infer<typeof createChannelFormSchema>;
+export type editChannelFormType = z.infer<typeof editChanneFormSchema>;
