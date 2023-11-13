@@ -15,7 +15,7 @@ export function ServerSidebarHeader({
 }: ServerSidebarHeaderProps) {
   return (
     <SidebarDropdown role={role} server={server}>
-      <button className="w-full h-14 border-b-[2px] border-b-neutral-800 hover:bg-[#151515d7] transition-all duration-300">
+      <button className="w-full h-14 border-b-[2px] border-r-[2px] border-b-neutral-800 hover:bg-[#151515d7] transition-all duration-300">
         <div className="flex items-center justify-between mx-4">
           <div className="text-sm font-semibold truncate">{server.name}</div>
           <ChevronDownIcon className="hidden md:flex" />
