@@ -19,7 +19,8 @@ export function EditChannelModal() {
   const opened = type === "edit-channel" && open;
 
   if (!channel || !server) {
-    return "Channel Or Server Undefined";
+    console.log("Channel Or Server Undefined");
+    return;
   }
 
   return (
