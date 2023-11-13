@@ -102,6 +102,7 @@ model Server {
   owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   members  Member[]
   channels Channel[]
+  messages Message[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -119,6 +120,12 @@ model Member {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
+  messages       Message[]
+  directMessages DirectMessage[]
+
+  initiatedConversations Conversations[] @relation("member-one")
+  receivedConversations  Conversations[] @relation("member-two")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -134,11 +141,69 @@ model Channel {
   type     ChannelType @default(TEXT)
   serverId String
 
-  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  server   Server    @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  messages Message[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([serverId])
   @@map("channel")
+}
+
+model Message {
+  id      String  @id @default(cuid())
+  text    String  @db.Text
+  fileUrl String? @db.Text
+
+  memberId  String
+  channelId String
+  serverId  String
+
+  member  Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  server  Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([memberId])
+  @@index([channelId])
+  @@map("messages")
+}
+
+model Conversations {
+  id String @id @default(cuid())
+
+  memberOneId String
+  memberTwoId String
+
+  memberOne Member @relation("member-one", fields: [memberOneId], references: [id], onDelete: Cascade)
+  memberTwo Member @relation("member-two", fields: [memberTwoId], references: [id], onDelete: Cascade)
+
+  directMessages DirectMessage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([memberOneId, memberTwoId])
+  @@map("conversations")
+}
+
+model DirectMessage {
+  id      String  @id @default(cuid())
+  text    String  @db.Text
+  fileUrl String? @db.Text
+
+  memberId       String
+  conversationId String
+
+  member       Member        @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  conversation Conversations @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([conversationId])
+  @@map("direct_messages")
 }
