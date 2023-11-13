@@ -1,12 +1,14 @@
 "use client";
 
+import { useParams, useRouter } from "next/navigation";
+
 import { Member, MemberRole, User } from "@prisma/client";
 import { ServerWithMembersWithUser } from "../../../../../types";
 
-import { Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+import { Crown } from "lucide-react";
 import { LockClosedIcon, LockOpen2Icon } from "@radix-ui/react-icons";
 
 interface ServerMemberProps {
@@ -24,10 +26,13 @@ const iconMap = {
 };
 
 export function ServerMember({ member, server, role }: ServerMemberProps) {
+  const params = useParams();
+  const router = useRouter();
+
   const Icon = iconMap[member.role];
 
   function onClick() {
-    console.log("members");
+    router.push(`/server/${params?.serverId}/conversations/${member.id}`);
   }
 
   return (
@@ -41,7 +46,8 @@ export function ServerMember({ member, server, role }: ServerMemberProps) {
         <Icon className="text-zinc-500" size="15" />
         <p
           className={cn(
-            "font-semibold truncate pr-4 text-[13px] text-zinc-500 group-hover:text-neutral-300"
+            "font-semibold truncate pr-4 text-[13px] text-zinc-500 group-hover:text-neutral-300",
+            params.memberId === member.id && "text-white"
           )}
         >
           {member.user.username}
