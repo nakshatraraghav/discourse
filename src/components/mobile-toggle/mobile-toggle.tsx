@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { ServerNavigation } from "../server/sidebar/main-sidebar/server-navigation";
 import { ServerSidebar } from "../server/sidebar/server-sidebar/server-sidebar";
 import { Menu } from "lucide-react";
