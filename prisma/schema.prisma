@@ -186,7 +186,6 @@ model Conversations {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([memberOneId, memberTwoId])
   @@map("conversations")
 }
 
@@ -198,6 +197,8 @@ model DirectMessage {
   memberId       String
   conversationId String
 
+  deleted Boolean @default(false)
+
   member       Member        @relation(fields: [memberId], references: [id], onDelete: Cascade)
   conversation Conversations @relation(fields: [conversationId], references: [id], onDelete: Cascade)
 
@@ -205,5 +206,6 @@ model DirectMessage {
   updatedAt DateTime @updatedAt
 
   @@index([conversationId])
+  @@index([memberId])
   @@map("direct_messages")
 }
