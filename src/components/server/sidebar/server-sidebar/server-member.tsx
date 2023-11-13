@@ -43,7 +43,13 @@ export function ServerMember({ member, server, role }: ServerMemberProps) {
       className="group rounded-md gap-x-2 w-full mb-1 truncate"
     >
       <div className="w-full flex items-center space-x-1">
-        <Icon className="text-zinc-500" size="15" />
+        <Icon
+          className={cn(
+            "text-zinc-500 group-hover:text-zinc-300",
+            params.memberId === member.id && "text-white"
+          )}
+          size={15}
+        />
         <p
           className={cn(
             "font-semibold truncate pr-4 text-[13px] text-zinc-500 group-hover:text-neutral-300",

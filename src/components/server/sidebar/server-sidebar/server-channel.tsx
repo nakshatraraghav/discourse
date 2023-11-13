@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Channel, ChannelType, MemberRole } from "@prisma/client";
 import { ServerWithMembersWithUser } from "../../../../../types";
 
-import { Delete, Edit, Hash, Mic, Trash2, Video } from "lucide-react";
+import { Edit, Hash, Mic, Trash2, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -52,12 +52,18 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
       size={"sm"}
       className={cn(
         "group rounded-md gap-x-2 w-full mb-1",
-        params.channelId === channel.id && "bg-zinc-700/20 dark:bg-zinc-700"
+        params.channelId === channel.id && "text-white bg-secondary/90"
       )}
     >
       <div className="w-full flex items-center justify-between pr-4">
         <div className="flex items-center space-x-1">
-          <Icon className="text-zinc-500 group-hover:text-zinc-300" size="15" />
+          <Icon
+            className={cn(
+              "text-zinc-500 group-hover:text-zinc-300",
+              params.channelId === channel.id && "text-white"
+            )}
+            size="15"
+          />
           <p
             className={cn(
               "font-semibold text-[13px] text-zinc-500 group-hover:text-neutral-300",
