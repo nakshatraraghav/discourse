@@ -2,15 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-import {
-  CrownIcon,
-  HashIcon,
-  MicIcon,
-  Search,
-  ShieldAlertIcon,
-  ShieldCheckIcon,
-  VideoIcon,
-} from "lucide-react";
+import { CrownIcon, HashIcon, MicIcon, Search, VideoIcon } from "lucide-react";
 
 import {
   Command,
@@ -20,8 +12,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 
 import { Channel, ChannelType, Member, MemberRole, User } from "@prisma/client";
