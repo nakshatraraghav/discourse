@@ -37,7 +37,7 @@ export function ServerChannel({ channel, server, role }: ServerChannelProps) {
   const moderator = role === "ADMIN" || role === "MODERATOR";
 
   function onClick() {
-    router.push(`/servers/${params?.id}/channels/${channel.id}`);
+    router.push(`/server/${params?.id}/channel/${channel.id}`);
   }
 
   const onAction = (e: React.MouseEvent, modal: ModalType) => {
