@@ -19,6 +19,8 @@ export async function POST(request: Request) {
 
     const data = messageSchema.parse(await request.json());
 
+    console.log(data);
+
     const server = await prisma.server.findFirst({
       where: {
         id: data.serverId,

@@ -14,13 +14,12 @@ import {
   FormItem,
   FormLabel,
   FormControl,
-  FormDescription,
-  FormMessage,
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { useModalStore } from "@/store/modal";
 
 const schema = z.object({
   body: z.string().min(1),
@@ -48,11 +47,12 @@ export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
 
   const { toast } = useToast();
 
+  const { onOpen } = useModalStore();
+
   async function onSubmit(data: formType) {
     try {
       await axios.post("/api/messages", {
         body: data.body,
-        fileUrl: "http://www.google.com",
         channelId: channelId,
         serverId: serverId,
       });
@@ -79,13 +79,22 @@ export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
               <FormLabel />
               <FormControl>
                 <div className="p-4 pb-6">
-                  <button className="absolute top-9 left-8 h-[24px] w-[24px] bg-zinc-900 text-white hover:bg-zinc-800 transition rounded-full p-1 flex items-center justify-center">
+                  <button
+                    className="absolute top-9 left-8 h-[24px] w-[24px] bg-zinc-900 text-white hover:bg-zinc-800 transition rounded-full p-1 flex items-center justify-center"
+                    type="button"
+                    onClick={() => {
+                      onOpen("send-file-modal", {
+                        serverId: serverId,
+                        channelId: channelId,
+                      });
+                    }}
+                  >
                     <PlusIcon className="text-white" />
                   </button>
                   <Input
                     className={cn(
                       "px-14 py-6 bg-[#100e0d] border-[1px] border-[#100e0d] focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200",
-                      errors["body"] && "border-[1px] border-red-700",
+                      errors["body"] && "border-[1px] border-red-700"
                     )}
                     placeholder={`Message #${name}`}
                     disabled={loading}
