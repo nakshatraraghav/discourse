@@ -24,6 +24,7 @@ export function FileUpload({ endpoint, value, onChange }: FileUploadProps) {
           onClick={() => {
             onChange("");
             // TODO: Delete File
+            // TODO Show Video and PDF
           }}
         />
       </div>
