@@ -46,7 +46,12 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
         type="channel"
       />
       <div className="flex-1">messages</div>
-      <ChatInput type="channel" name={channel.name} />
+      <ChatInput
+        type="channel"
+        name={channel.name}
+        channelId={channel.id}
+        serverId={channel.serverId}
+      />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import axios from "axios";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +20,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 const schema = z.object({
   body: z.string().min(1),
@@ -28,9 +31,11 @@ type formType = z.infer<typeof schema>;
 interface ChatInputProps {
   name: string;
   type: "direct-conversation" | "channel";
+  channelId: string;
+  serverId: string;
 }
 
-export function ChatInput({ type, name }: ChatInputProps) {
+export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
   const form = useForm<formType>({
     defaultValues: {
       body: "",
@@ -41,8 +46,26 @@ export function ChatInput({ type, name }: ChatInputProps) {
   const loading = form.formState.isSubmitting;
   const errors = form.formState.errors;
 
+  const { toast } = useToast();
+
   async function onSubmit(data: formType) {
-    console.log(data);
+    try {
+      await axios.post("/api/messages", {
+        body: data.body,
+        fileUrl: "http://www.google.com",
+        channelId: channelId,
+        serverId: serverId,
+      });
+
+      form.reset();
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Messsage Failed",
+        description: "Couldn't send the message, please try again later",
+      });
+    }
   }
 
   return (
@@ -64,6 +87,7 @@ export function ChatInput({ type, name }: ChatInputProps) {
                       "px-14 py-6 bg-[#100e0d] border-[1px] border-[#100e0d] focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200",
                       errors["body"] && "border-[1px] border-red-700",
                     )}
+                    placeholder={`Message #${name}`}
                     disabled={loading}
                     {...field}
                   />
