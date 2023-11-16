@@ -50,6 +50,9 @@ dependencies:
   '@t3-oss/env-nextjs':
     specifier: ^0.7.1
     version: 0.7.1(typescript@5.2.2)(zod@3.22.4)
+  '@tanstack/react-query':
+    specifier: ^5.8.4
+    version: 5.8.4(react-dom@18.2.0)(react@18.2.0)
   '@uploadthing/react':
     specifier: ^5.7.0
     version: 5.7.0(next@14.0.2)(react@18.2.0)(uploadthing@5.7.4)
@@ -1439,6 +1442,27 @@ packages:
       '@t3-oss/env-core': 0.7.1(typescript@5.2.2)(zod@3.22.4)
       typescript: 5.2.2
       zod: 3.22.4
+    dev: false
+
+  /@tanstack/query-core@5.8.3:
+    resolution: {integrity: sha512-SWFMFtcHfttLYif6pevnnMYnBvxKf3C+MHMH7bevyYfpXpTMsLB9O6nNGBdWSoPwnZRXFNyNeVZOw25Wmdasow==}
+    dev: false
+
+  /@tanstack/react-query@5.8.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-CD+AkXzg8J72JrE6ocmuBEJfGzEzu/bzkD6sFXFDDB5yji9N20JofXZlN6n0+CaPJuIi+e4YLCbGsyPFKkfNQA==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 5.8.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@types/json5@0.0.29:
