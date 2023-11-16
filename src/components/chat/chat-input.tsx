@@ -6,7 +6,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { PlusIcon, SmileIcon } from "lucide-react";
+import { PlusIcon, SendHorizonal } from "lucide-react";
 
 import {
   Form,
@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormControl,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -94,15 +95,20 @@ export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
                   <Input
                     className={cn(
                       "px-14 py-6 bg-[#100e0d] border-[1px] border-[#100e0d] focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200",
-                      errors["body"] && "border-[1px] border-red-700"
+                      errors["body"] && "border-[1px] border-red-700",
                     )}
                     placeholder={`Message #${name}`}
                     disabled={loading}
                     {...field}
                   />
-                  <div className="absolute top-9 right-8">
-                    <SmileIcon className="text-white cursor-pointer" />
-                  </div>
+                  <Button
+                    type="submit"
+                    size={"icon"}
+                    variant={"outline"}
+                    className="absolute top-9 right-8"
+                  >
+                    <SendHorizonal className="text-white cursor-pointer rotate-180 p-1" />
+                  </Button>
                 </div>
               </FormControl>
             </FormItem>
