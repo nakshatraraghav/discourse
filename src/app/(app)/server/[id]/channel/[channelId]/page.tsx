@@ -2,8 +2,10 @@ import { options } from "@/server/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import prisma from "@/server/db/prisma";
 import { ChatHeader } from "@/components/chat/chat-header";
+import { ChatInput } from "@/components/chat/chat-input";
+
+import prisma from "@/server/db/prisma";
 
 interface ChannelPageProps {
   params: {
@@ -37,12 +39,14 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <ChatHeader
         name={channel.name}
         serverId={channel.serverId}
         type="channel"
       />
+      <div className="flex-1">messages</div>
+      <ChatInput type="channel" name={channel.name} />
     </div>
   );
 }

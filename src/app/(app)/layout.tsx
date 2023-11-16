@@ -6,7 +6,7 @@ export default function MainAppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="">
+    <div className="h-full">
       <div className="hidden md:flex h-full w-[80px] z-10 flex-col fixed inset-y-0 border-r-[2px] dark:border-r-[#111111]">
         <ServerNavigation />
       </div>

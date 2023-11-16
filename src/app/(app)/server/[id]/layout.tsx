@@ -42,7 +42,7 @@ export default async function ServerLayout({
       <div className="hidden h-full md:flex flex-col fixed inset-y-0 w-60">
         <ServerSidebar serverId={server.id} />
       </div>
-      <main className="ml-0 md:ml-60">{children}</main>
+      <main className="ml-0 md:ml-60 h-full">{children}</main>
     </div>
   );
 }
