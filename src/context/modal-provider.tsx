@@ -11,6 +11,7 @@ import { LeaveServerModal } from "@/components/modal/leave-server-modal";
 import { DeleteServerModal } from "@/components/modal/delete-server-modal";
 import { EditChannelModal } from "@/components/modal/edit-channel-modal";
 import { DeleteChannelModal } from "@/components/modal/delete-channel-modal";
+import { SendFileModal } from "@/components/modal/send-file-modal";
 
 export function ModalProvider() {
   const [mounted, setMounted] = React.useState<boolean>(false);
@@ -34,6 +35,7 @@ export function ModalProvider() {
       <DeleteServerModal />
       <EditChannelModal />
       <DeleteChannelModal />
+      <SendFileModal />
     </React.Fragment>
   );
 }

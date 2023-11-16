@@ -11,11 +11,14 @@ export type ModalType =
   | "leave-server"
   | "delete-server"
   | "edit-channel"
-  | "delete-channel";
+  | "delete-channel"
+  | "send-file-modal";
 
 type ModalData = {
   server?: ServerWithMembersWithUser;
-  channel?: Channel
+  channel?: Channel;
+  channelId?: string;
+  serverId?: string;
 };
 
 type ModalStore = {
@@ -36,7 +39,9 @@ export const useModalStore = create<ModalStore>((set) => ({
       open: true,
       data: {
         server: modalData.server || undefined,
-        channel: modalData.channel || undefined
+        channel: modalData.channel || undefined,
+        channelId: modalData.channelId || undefined,
+        serverId: modalData.serverId || undefined,
       },
     }),
   onClose: () => set({ type: null, open: false, data: {} }),
