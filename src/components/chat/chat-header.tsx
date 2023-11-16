@@ -15,9 +15,9 @@ export function ChatHeader({ name, serverId, type, image }: ChatHeaderProps) {
       <div className="md:hidden">
         <MobileTogggle serverId={serverId} />
       </div>
-      <div className="flex items-center space-x-1">
+      <div className="flex items-center mb-1 space-x-1">
         {type === "channel" ? (
-          <Hash size={15} />
+          <Hash size={18} className="ml-3" />
         ) : (
           <div className="flex items-center justify-center">
             <Avatar image={image} className="h-7 w-7 mt-6 mr-2" />
