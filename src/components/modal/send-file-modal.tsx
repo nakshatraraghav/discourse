@@ -18,8 +18,6 @@ export function SendFileModal() {
   const channelId = data.channelId ?? "";
   const serverId = data.serverId ?? "";
 
-  console.log({ serverId, channelId });
-
   const opened = type === "send-file-modal" && open;
 
   return (
