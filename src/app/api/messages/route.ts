@@ -8,6 +8,95 @@ import { ZodError } from "zod";
 
 import { messageSchema } from "@/server/schema/messages/message.schema";
 import { pusherServer } from "@/lib/pusher";
+import { Message } from "@prisma/client";
+
+const MESSAGE_BATCH: number = 10;
+
+export async function GET(request: Request) {
+  try {
+    const session = await getServerSession(options);
+
+    if (!session) {
+      return new NextResponse("unauthorized", { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+
+    const cursor = searchParams.get("cursor");
+
+    const chatId = searchParams.get("chatId");
+
+    if (!chatId) {
+      return new NextResponse("chat id missing from search params", {
+        status: 400,
+      });
+    }
+
+    let messages: Message[] = [];
+
+    if (!cursor) {
+      messages = await prisma.message.findMany({
+        where: {
+          channelId: chatId,
+        },
+        take: MESSAGE_BATCH,
+        include: {
+          member: {
+            include: {
+              user: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+    } else {
+      messages = await prisma.message.findMany({
+        where: {
+          channelId: chatId,
+        },
+        take: MESSAGE_BATCH,
+        skip: 1,
+        cursor: {
+          id: cursor,
+        },
+        include: {
+          member: {
+            include: {
+              user: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+    }
+
+    if (!messages) {
+      return new NextResponse(
+        "querying for messages failed, please try again later",
+        { status: 501 },
+      );
+    }
+
+    let nextCursor = null;
+
+    if (messages.length === MESSAGE_BATCH) {
+      nextCursor = messages[MESSAGE_BATCH - 1].id;
+    }
+
+    return NextResponse.json({
+      items: messages,
+      nextCursor,
+    });
+  } catch (error) {
+    console.log("GET /api/messages ERROR", error);
+
+    return new NextResponse("INTERNAL SERVER ERROR", { status: 500 });
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -18,8 +107,6 @@ export async function POST(request: Request) {
     }
 
     const data = messageSchema.parse(await request.json());
-
-    console.log(data);
 
     const server = await prisma.server.findFirst({
       where: {
@@ -78,8 +165,6 @@ export async function POST(request: Request) {
     }
 
     const pusherChannelKey = `chat-${channel.id}-messages`;
-
-    console.log(pusherChannelKey);
 
     await pusherServer.trigger(pusherChannelKey, "message:new", message);
 
