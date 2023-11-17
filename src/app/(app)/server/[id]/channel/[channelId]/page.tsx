@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { ChatHeader } from "@/components/chat/chat-header";
 import { ChatInput } from "@/components/chat/chat-input";
+import { ChatMessages } from "@/components/chat/chat-messages";
 
 import prisma from "@/server/db/prisma";
 
@@ -45,7 +46,12 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
         serverId={channel.serverId}
         type="channel"
       />
-      <div className="flex-1">messages</div>
+      <ChatMessages
+        member={member}
+        chatId={channel.id}
+        type="channel"
+        name={channel.name}
+      />
       <ChatInput
         type="channel"
         name={channel.name}

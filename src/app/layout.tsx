@@ -3,11 +3,14 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { ThemeProvider } from "@/context/theme-provider";
-import { SessionProvider } from "@/context/session-provider";
-import { Toaster } from "@/components/ui/toaster";
+import { options } from "@/server/auth";
 import { getServerSession } from "next-auth";
+
+import { Toaster } from "@/components/ui/toaster";
+import { SessionProvider } from "@/context/session-provider";
 import { ModalProvider } from "@/context/modal-provider";
+import { ThemeProvider } from "@/context/theme-provider";
+import { QueryProvider } from "@/context/query-provider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -21,14 +24,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(options);
 
   return (
     <html lang="en">
       <body className={font.className}>
         <SessionProvider session={session}>
           <ThemeProvider>
-            {children}
+            <QueryProvider>{children}</QueryProvider>
             <Toaster />
             <ModalProvider />
           </ThemeProvider>
