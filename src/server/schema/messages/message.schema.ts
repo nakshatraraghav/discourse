@@ -7,4 +7,10 @@ export const messageSchema = z.object({
   serverId: z.string().min(1),
 });
 
+export const messageUpdateSchema = z.object({
+  text: z.string().min(1),
+});
+
+export type messageUpdateSchemaType = z.infer<typeof messageUpdateSchema>;
+
 export type messageSchemaType = z.infer<typeof messageSchema>;
