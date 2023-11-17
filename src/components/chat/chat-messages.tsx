@@ -1,11 +1,17 @@
 "use client";
 
+import React from "react";
+
 import { useChatQuery } from "@/hooks/use-chat-query";
 
 import { Member } from "@prisma/client";
+import { MessageWithUser } from "../../../types";
+
 import { ChatWelcome } from "./chat-welcome";
 import { Loader2, ServerCrashIcon } from "lucide-react";
+
 import { Button } from "../ui/button";
+import { ChatMessageItem } from "@/components/chat/chat-message-item";
 
 interface ChatMessagesProps {
   name: string;
@@ -59,9 +65,24 @@ export function ChatMessages({
     );
   }
 
+  const pages = query.data?.pages;
+
   return (
     <div className="flex-1 flex flex-col p-4 overflow-y-auto">
       <ChatWelcome type={type} name={name} />
+      <div className="flex flex-col-reverse mt-auto">
+        {pages?.map((page, i) => (
+          <React.Fragment key={i}>
+            {page.items.map((message: MessageWithUser) => (
+              <ChatMessageItem
+                message={message}
+                currentMember={member}
+                key={message.id}
+              />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 }
