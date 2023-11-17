@@ -5,4 +5,4 @@ export type ServerWithMembersWithUser = Server & {
   channels: Channel[];
 };
 
-export type MessageWithUser = (Message & { member: Member & { user: User } })[];
+export type MessageWithUser = Message & { member: Member & { user: User } };
