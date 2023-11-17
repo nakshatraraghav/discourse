@@ -137,7 +137,7 @@ export function ChatMessageItem({
           )}
         </div>
       </div>
-      {permissions.canDelete && (
+      {permissions.canDelete && !message.deleted && (
         <div className="p-1 -top-2 right-5 hidden group-hover:flex items-center gap-x-3 absolute bg-white dark:bg-[#100e0d] border rounded-sm">
           {permissions.canEdit && (
             <Tooltip label="Edit">
