@@ -155,6 +155,7 @@ model Message {
   id      String  @id @default(cuid())
   text    String  @db.Text
   fileUrl String? @db.Text
+  deleted Boolean @default(false)
 
   memberId  String
   channelId String
