@@ -106,7 +106,7 @@ export function SendFileForm({ type, channelId, serverId }: SendFileFormProps) {
 
               <FormControl>
                 <FileUpload
-                  endpoint="serverLogo"
+                  endpoint="messageFile"
                   onChange={field.onChange}
                   value={field.value}
                 />
