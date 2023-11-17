@@ -2,6 +2,10 @@
 
 import axios from "axios";
 
+import { useToast } from "@/hooks/use-toast";
+import { useModalStore } from "@/store/modal";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,9 +23,6 @@ import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
-import { useModalStore } from "@/store/modal";
-
 const schema = z.object({
   body: z.string().min(1),
 });
@@ -36,6 +37,10 @@ interface ChatInputProps {
 }
 
 export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
+  const key = `chat:${channelId}`;
+
+  const queryClient = useQueryClient();
+
   const form = useForm<formType>({
     defaultValues: {
       body: "",
@@ -50,7 +55,7 @@ export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
 
   const { onOpen } = useModalStore();
 
-  async function onSubmit(data: formType) {
+  async function createMessage(data: formType) {
     try {
       await axios.post("/api/messages", {
         body: data.body,
@@ -67,6 +72,19 @@ export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
         description: "Couldn't send the message, please try again later",
       });
     }
+  }
+  const messageMutation = useMutation({
+    mutationKey: [key],
+    mutationFn: createMessage,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [key],
+      });
+    },
+  });
+
+  async function onSubmit(data: formType) {
+    messageMutation.mutate(data);
   }
 
   return (
