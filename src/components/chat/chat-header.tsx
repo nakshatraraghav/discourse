@@ -2,6 +2,8 @@ import { Hash } from "lucide-react";
 import { MobileTogggle } from "@/components/mobile-toggle/mobile-toggle";
 import { Avatar } from "../avatar/avatar";
 import { ChatHeaderSocketStatus } from "./chat-header-socket-status";
+import { ConversationVideoButton } from "./conversation-video-button";
+import { ConversationAudioButton } from "./conversation-audio-button";
 
 interface ChatHeaderProps {
   type: "channel" | "conversation";
@@ -26,7 +28,15 @@ export function ChatHeader({ name, serverId, type, image }: ChatHeaderProps) {
         )}
         <div className="font-semibold text-sm">{name}</div>
       </div>
-      <ChatHeaderSocketStatus />
+      <div className="flex item-center ml-auto space-x-4">
+        {type === "conversation" && (
+          <div className="flex space-x-3">
+            <ConversationAudioButton />
+            <ConversationVideoButton />
+          </div>
+        )}
+        <ChatHeaderSocketStatus />
+      </div>
     </div>
   );
 }

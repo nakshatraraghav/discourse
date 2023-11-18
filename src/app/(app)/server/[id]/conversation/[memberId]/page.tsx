@@ -1,3 +1,5 @@
+import React from "react";
+
 import { getServerSession } from "next-auth";
 import { options } from "@/server/auth";
 import { redirect } from "next/navigation";
@@ -7,16 +9,22 @@ import { getOrCreateConversation } from "@/server/services/conversation.service"
 import { ChatHeader } from "@/components/chat/chat-header";
 import { ChatMessages } from "@/components/chat/chat-messages";
 import { ChatInput } from "@/components/chat/chat-input";
+import { LiveKitMediaRoom } from "@/components/livekit/livekit-media-room";
 
 interface ConversationPageProps {
   params: {
     id: string;
     memberId: string;
   };
+  searchParams: {
+    video: boolean;
+    audio: boolean;
+  };
 }
 
 export default async function ConversationPage({
   params,
+  searchParams,
 }: ConversationPageProps) {
   const session = await getServerSession(options);
 
@@ -60,18 +68,28 @@ export default async function ConversationPage({
         type="conversation"
         image={otherMember.user.image ?? ""}
       />
-      <ChatMessages
-        member={member}
-        chatId={conversation.id}
-        type="direct-conversation"
-        name={otherMember.user.username ?? ""}
-      />
-      <ChatInput
-        type="direct-conversation"
-        name={otherMember.user.username ?? ""}
-        serverId={member.serverId}
-        conversationId={conversation.id}
-      />
+      {!searchParams.video && !searchParams.audio && (
+        <React.Fragment>
+          <ChatMessages
+            member={member}
+            chatId={conversation.id}
+            type="direct-conversation"
+            name={otherMember.user.username ?? ""}
+          />
+          <ChatInput
+            type="direct-conversation"
+            name={otherMember.user.username ?? ""}
+            serverId={member.serverId}
+            conversationId={conversation.id}
+          />
+        </React.Fragment>
+      )}
+      {searchParams.audio && (
+        <LiveKitMediaRoom audio={true} video={false} chatId={conversation.id} />
+      )}
+      {searchParams.video && (
+        <LiveKitMediaRoom audio={true} video={true} chatId={conversation.id} />
+      )}
     </div>
   );
 }
