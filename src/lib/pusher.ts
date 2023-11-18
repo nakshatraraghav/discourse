@@ -4,13 +4,18 @@ import PusherClient from "pusher-js";
 import { env } from "@/server/env";
 
 export const pusherServer = new PusherServer({
-  appId: env.PUSHER_APP_ID,
-  key: env.PUSHER_KEY,
-  secret: env.PUSHER_SECRET_KEY,
-  cluster: env.PUSHER_CLUSTER,
+  appId: env.NEXT_PUBLIC_PUSHER_APP_ID,
+  key: env.NEXT_PUBLIC_PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET_KEY!,
+  cluster: env.NEXT_PUBLIC_PUSHER_CLUSTER,
   useTLS: true,
 });
 
-export const pusherClient = new PusherClient(env.PUSHER_APP_ID, {
-  cluster: env.PUSHER_CLUSTER,
+export const pusherClient = new PusherClient(env.NEXT_PUBLIC_PUSHER_KEY, {
+  cluster: env.NEXT_PUBLIC_PUSHER_CLUSTER,
 });
+
+export const events = {
+  addMessage: "message-new",
+  updateMessage: "message-updated",
+};
