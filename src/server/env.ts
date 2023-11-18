@@ -12,12 +12,14 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string(),
     UPLOADTHING_SECRET: z.string(),
     UPLOADTHING_APP_ID: z.string(),
-    PUSHER_APP_ID: z.string(),
-    PUSHER_KEY: z.string(),
     PUSHER_SECRET_KEY: z.string(),
     PUSHER_CLUSTER: z.string(),
   },
-
+  client: {
+    NEXT_PUBLIC_PUSHER_APP_ID: z.string(),
+    NEXT_PUBLIC_PUSHER_CLUSTER: z.string(),
+    NEXT_PUBLIC_PUSHER_KEY: z.string(),
+  },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
@@ -28,9 +30,10 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     UPLOADTHING_APP_ID: process.env.UPLOADTHING_APP_ID,
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
-    PUSHER_APP_ID: process.env.PUSHER_APP_ID,
-    PUSHER_KEY: process.env.PUSHER_KEY,
-    PUSHER_SECRET_KEY: process.env.PUSHER_SECRET_KEY,
     PUSHER_CLUSTER: process.env.PUSHER_CLUSTER,
+    PUSHER_SECRET_KEY: process.env.PUSHER_SECRET_KEY,
+    NEXT_PUBLIC_PUSHER_APP_ID: process.env.NEXT_PUBLIC_PUSHER_APP_ID,
+    NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
   },
 });
