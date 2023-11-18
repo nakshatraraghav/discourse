@@ -1,6 +1,7 @@
 import { Hash } from "lucide-react";
 import { MobileTogggle } from "@/components/mobile-toggle/mobile-toggle";
 import { Avatar } from "../avatar/avatar";
+import { ChatHeaderSocketStatus } from "./chat-header-socket-status";
 
 interface ChatHeaderProps {
   type: "channel" | "conversation";
@@ -25,6 +26,7 @@ export function ChatHeader({ name, serverId, type, image }: ChatHeaderProps) {
         )}
         <div className="font-semibold text-sm">{name}</div>
       </div>
+      <ChatHeaderSocketStatus />
     </div>
   );
 }
