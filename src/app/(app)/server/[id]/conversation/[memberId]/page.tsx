@@ -3,8 +3,10 @@ import { options } from "@/server/auth";
 import { redirect } from "next/navigation";
 
 import prisma from "@/server/db/prisma";
-import { findOrCreateConversation } from "@/server/services/conversation.service";
+import { getOrCreateConversation } from "@/server/services/conversation.service";
 import { ChatHeader } from "@/components/chat/chat-header";
+import { ChatMessages } from "@/components/chat/chat-messages";
+import { ChatInput } from "@/components/chat/chat-input";
 
 interface ConversationPageProps {
   params: {
@@ -36,10 +38,10 @@ export default async function ConversationPage({
     return redirect("/");
   }
 
-  const conversation = await findOrCreateConversation({
-    memberOneId: member.id,
-    memberTwoId: params.memberId,
-  });
+  const conversation = await getOrCreateConversation(
+    member.id,
+    params.memberId
+  );
 
   if (!conversation) {
     return redirect(`/server/${params.id}`);
@@ -47,15 +49,28 @@ export default async function ConversationPage({
 
   const { memberOne, memberTwo } = conversation;
 
-  const otherMember = memberOne.id !== session.user.id ? memberTwo : memberOne;
+  const otherMember =
+    memberOne.userId === session.user.id ? memberTwo : memberOne;
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <ChatHeader
         name={otherMember.user.name ?? "username"}
         serverId={params.id}
         type="conversation"
         image={otherMember.user.image ?? ""}
+      />
+      <ChatMessages
+        member={member}
+        chatId={conversation.id}
+        type="direct-conversation"
+        name={otherMember.user.username ?? ""}
+      />
+      <ChatInput
+        type="direct-conversation"
+        name={otherMember.user.username ?? ""}
+        serverId={member.serverId}
+        conversationId={conversation.id}
       />
     </div>
   );
