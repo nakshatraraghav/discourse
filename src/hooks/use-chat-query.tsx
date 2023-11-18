@@ -3,9 +3,8 @@
 import qs from "query-string";
 import axios from "axios";
 
-import { useOrigin } from "@/hooks/use-origin";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useSocketStore } from "@/store/socket-status";
 
 interface ChatQueryProps {
   queryKey: string;
@@ -18,14 +17,11 @@ export function useChatQuery({
   chatType,
   chatTypeId,
 }: ChatQueryProps) {
-  const origin = "http://localhost:3000"; // useOrigin() should work here instead of this
-  // TODO: When client subscribes to a socket turn this value to true so that our api isnt refetched every 2 seconds
-
-  const socketConnected = true;
+  const { status } = useSocketStore();
 
   const map = {
-    channel: origin + "/api/messages",
-    "direct-conversation": origin + "/api/messages/direct-conversation",
+    channel: "/api/messages",
+    "direct-conversation": "/api/messages/direct-conversation",
   };
 
   async function fetchMessages({
@@ -44,7 +40,7 @@ export function useChatQuery({
             chatId: chatTypeId,
           },
         },
-        { skipNull: true },
+        { skipNull: true }
       );
     } else {
       url = qs.stringifyUrl({
@@ -63,7 +59,7 @@ export function useChatQuery({
     queryKey: [queryKey],
     queryFn: fetchMessages,
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
-    refetchInterval: socketConnected ? false : 1000,
+    refetchInterval: status === "connected" ? false : 1000,
     initialPageParam: "",
   });
 
