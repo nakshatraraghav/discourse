@@ -14,11 +14,14 @@ export const env = createEnv({
     UPLOADTHING_APP_ID: z.string(),
     PUSHER_SECRET_KEY: z.string(),
     PUSHER_CLUSTER: z.string(),
+    LIVEKIT_API_KEY: z.string(),
+    LIVEKIT_API_SECRET: z.string(),
   },
   client: {
     NEXT_PUBLIC_PUSHER_APP_ID: z.string(),
     NEXT_PUBLIC_PUSHER_CLUSTER: z.string(),
     NEXT_PUBLIC_PUSHER_KEY: z.string(),
+    NEXT_PUBLIC_LIVEKIT_URL: z.string(),
   },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
@@ -32,8 +35,11 @@ export const env = createEnv({
     UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
     PUSHER_CLUSTER: process.env.PUSHER_CLUSTER,
     PUSHER_SECRET_KEY: process.env.PUSHER_SECRET_KEY,
+    LIVEKIT_API_KEY: process.env.LIVEKIT_API_KEY,
+    LIVEKIT_API_SECRET: process.env.LIVEKIT_API_SECRET,
     NEXT_PUBLIC_PUSHER_APP_ID: process.env.NEXT_PUBLIC_PUSHER_APP_ID,
     NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
     NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
+    NEXT_PUBLIC_LIVEKIT_URL: process.env.NEXT_PUBLIC_LIVEKIT_URL,
   },
 });
