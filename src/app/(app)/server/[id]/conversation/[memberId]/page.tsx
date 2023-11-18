@@ -47,7 +47,7 @@ export default async function ConversationPage({
 
   const { memberOne, memberTwo } = conversation;
 
-  const otherMember = memberOne.id === session.user.id ? memberTwo : memberOne;
+  const otherMember = memberOne.id !== session.user.id ? memberTwo : memberOne;
 
   return (
     <div>
