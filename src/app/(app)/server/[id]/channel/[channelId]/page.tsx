@@ -1,3 +1,5 @@
+import React from "react";
+
 import { options } from "@/server/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -7,6 +9,8 @@ import { ChatInput } from "@/components/chat/chat-input";
 import { ChatMessages } from "@/components/chat/chat-messages";
 
 import prisma from "@/server/db/prisma";
+import { ChannelType } from "@prisma/client";
+import { LiveKitMediaRoom } from "@/components/livekit/livekit-media-room";
 
 interface ChannelPageProps {
   params: {
@@ -41,23 +45,37 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <ChatHeader
-        name={channel.name}
-        serverId={channel.serverId}
-        type="channel"
-      />
-      <ChatMessages
-        member={member}
-        chatId={channel.id}
-        type="channel"
-        name={channel.name}
-      />
-      <ChatInput
-        type="channel"
-        name={channel.name}
-        channelId={channel.id}
-        serverId={channel.serverId}
-      />
+      {channel.type === ChannelType.TEXT && (
+        <React.Fragment>
+          <ChatHeader
+            name={channel.name}
+            serverId={channel.serverId}
+            type="channel"
+          />
+          <ChatMessages
+            member={member}
+            chatId={channel.id}
+            type="channel"
+            name={channel.name}
+          />
+          <ChatInput
+            type="channel"
+            name={channel.name}
+            channelId={channel.id}
+            serverId={channel.serverId}
+          />
+        </React.Fragment>
+      )}
+      {channel.type === ChannelType.AUDIO && (
+        <React.Fragment>
+          <LiveKitMediaRoom chatId={channel.id} audio={true} video={false} />
+        </React.Fragment>
+      )}
+      {channel.type === ChannelType.VIDEO && (
+        <React.Fragment>
+          <LiveKitMediaRoom chatId={channel.id} audio={true} video={true} />
+        </React.Fragment>
+      )}
     </div>
   );
 }
