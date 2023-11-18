@@ -7,6 +7,13 @@ export const messageSchema = z.object({
   serverId: z.string().min(1),
 });
 
+export const directMessageSchema = z.object({
+  body: z.string().min(1),
+  fileUrl: z.string().url().min(1).optional(),
+  conversationId: z.string().min(1),
+  serverId: z.string().min(1),
+});
+
 export const messageUpdateSchema = z.object({
   text: z.string().min(1),
 });

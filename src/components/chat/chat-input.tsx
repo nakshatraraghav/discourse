@@ -32,12 +32,25 @@ type formType = z.infer<typeof schema>;
 interface ChatInputProps {
   name: string;
   type: "direct-conversation" | "channel";
-  channelId: string;
+  channelId?: string;
+  conversationId?: string;
   serverId: string;
 }
 
-export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
-  const key = `chat:${channelId}`;
+export function ChatInput({
+  type,
+  name,
+  channelId,
+  serverId,
+  conversationId,
+}: ChatInputProps) {
+  let key: string = "";
+
+  if (type === "channel") {
+    key = `chat:${channelId}`;
+  } else {
+    key = `chat:${conversationId}`;
+  }
 
   const queryClient = useQueryClient();
 
@@ -57,11 +70,19 @@ export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
 
   async function createMessage(data: formType) {
     try {
-      await axios.post("/api/messages", {
-        body: data.body,
-        channelId: channelId,
-        serverId: serverId,
-      });
+      if (type === "channel") {
+        await axios.post("/api/messages", {
+          body: data.body,
+          channelId: channelId,
+          serverId: serverId,
+        });
+      } else {
+        axios.post("/api/messages/direct-conversation", {
+          body: data.body,
+          conversationId: conversationId!,
+          serverId: serverId,
+        });
+      }
 
       form.reset();
     } catch (error) {
@@ -113,7 +134,7 @@ export function ChatInput({ type, name, channelId, serverId }: ChatInputProps) {
                   <Input
                     className={cn(
                       "px-14 py-6 bg-[#100e0d] border-[1px] border-[#100e0d] focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200",
-                      errors["body"] && "border-[1px] border-red-700",
+                      errors["body"] && "border-[1px] border-red-700"
                     )}
                     placeholder={`Message #${name}`}
                     disabled={loading}
