@@ -1,7 +1,9 @@
 "use client";
 
 import qs from "query-string";
+
 import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { Member } from "@prisma/client";
@@ -15,6 +17,7 @@ import { Tooltip } from "../ui/tooltip";
 import { ChatRenderMedia } from "./chat-render-media";
 import { EditMessageForm } from "./edit-message-form";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -34,7 +37,12 @@ export function ChatMessageItem({
   currentMember,
 }: ChatMessageItemProps) {
   const [isUserEditing, setIsUserEditing] = useState<boolean>(false);
+
   const queryClient = useQueryClient();
+
+  const router = useRouter();
+
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleKeydDown = (ev: KeyboardEvent) => {
@@ -58,6 +66,20 @@ export function ChatMessageItem({
     });
 
     await axios.delete(url);
+  }
+
+  function onUserClick() {
+    if (message.member.userId !== currentMember.userId) {
+      return router.push(
+        `/server/${message.serverId}/conversation/${message.member.id}`,
+      );
+    }
+
+    toast({
+      variant: "destructive",
+      title: "Invalid Action",
+      description: "You cannot start a conversation with yourself",
+    });
   }
 
   const deleteMessageMutation = useMutation({
@@ -104,7 +126,12 @@ export function ChatMessageItem({
         </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2 font-semibold">
-            <div className="flex items-center">
+            <div
+              className="flex items-center"
+              onClick={() => {
+                onUserClick();
+              }}
+            >
               <p className="font-semibold text-sm hover:underline cursor-pointer">
                 {user.username}
               </p>
