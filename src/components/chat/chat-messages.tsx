@@ -105,6 +105,7 @@ export function ChatMessages({
                 message={message}
                 currentMember={member}
                 key={message.id}
+                type={type}
               />
             ))}
           </React.Fragment>

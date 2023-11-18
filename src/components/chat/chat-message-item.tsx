@@ -30,9 +30,11 @@ const roleIconMap = {
 interface ChatMessageItemProps {
   message: MessageWithUser;
   currentMember: Member;
+  type: "channel" | "direct-conversation";
 }
 
 export function ChatMessageItem({
+  type,
   message,
   currentMember,
 }: ChatMessageItemProps) {
@@ -71,7 +73,7 @@ export function ChatMessageItem({
   function onUserClick() {
     if (message.member.userId !== currentMember.userId) {
       return router.push(
-        `/server/${message.serverId}/conversation/${message.member.id}`,
+        `/server/${message.serverId}/conversation/${message.member.id}`
       );
     }
 
@@ -142,6 +144,9 @@ export function ChatMessageItem({
             <div className="text-xs text-zinc-400 font-semibold">
               {timestamp}
             </div>
+            <div className="text-xs text-zinc-400 font-semibold">
+              {isUpdated && "edited"}
+            </div>
           </div>
           {!message.deleted && <ChatRenderMedia fileUrl={message.fileUrl} />}
           {!isUserEditing && !message.deleted && (
@@ -149,14 +154,16 @@ export function ChatMessageItem({
               {message.text}
             </p>
           )}
-          {!message.deleted && isUserEditing && (
-            <EditMessageForm
-              messageId={message.id}
-              serverId={message.serverId}
-              chatId={message.channelId}
-              setIsUserEditing={setIsUserEditing}
-            />
-          )}
+          {!message.deleted &&
+            isUserEditing &&
+            type !== "direct-conversation" && (
+              <EditMessageForm
+                messageId={message.id}
+                serverId={message.serverId}
+                chatId={message.channelId}
+                setIsUserEditing={setIsUserEditing}
+              />
+            )}
           {message.deleted && (
             <p className="text-sm text-zinc-600 dark:text-zinc-300 italic line-through">
               Message Has Been Deleted
@@ -164,26 +171,28 @@ export function ChatMessageItem({
           )}
         </div>
       </div>
-      {permissions.canDelete && !message.deleted && (
-        <div className="p-1 -top-2 right-5 hidden group-hover:flex items-center gap-x-3 absolute bg-white dark:bg-[#100e0d] border rounded-sm">
-          {permissions.canEdit && (
-            <Tooltip label="Edit">
-              <Edit
-                onClick={() => setIsUserEditing(true)}
+      {permissions.canDelete &&
+        !message.deleted &&
+        type !== "direct-conversation" && (
+          <div className="p-1 -top-2 right-5 hidden group-hover:flex items-center gap-x-3 absolute bg-white dark:bg-[#100e0d] border rounded-sm">
+            {permissions.canEdit && (
+              <Tooltip label="Edit">
+                <Edit
+                  onClick={() => setIsUserEditing(true)}
+                  className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
+                />
+              </Tooltip>
+            )}
+            <Tooltip label="Delete">
+              <Trash
                 className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
+                onClick={() => {
+                  deleteMessageMutation.mutate();
+                }}
               />
             </Tooltip>
-          )}
-          <Tooltip label="Delete">
-            <Trash
-              className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
-              onClick={() => {
-                deleteMessageMutation.mutate();
-              }}
-            />
-          </Tooltip>
-        </div>
-      )}
+          </div>
+        )}
     </div>
   );
 }
