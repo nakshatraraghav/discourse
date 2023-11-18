@@ -12,6 +12,7 @@ import { Loader2, ServerCrashIcon } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { ChatMessageItem } from "@/components/chat/chat-message-item";
+import { useChatPusher } from "@/hooks/use-chat-pusher";
 
 interface ChatMessagesProps {
   name: string;
@@ -27,6 +28,8 @@ export function ChatMessages({
   member,
 }: ChatMessagesProps) {
   const queryKey = `chat:${chatId}`;
+
+  useChatPusher({ chatId, queryKey });
 
   const query = useChatQuery({
     queryKey,
