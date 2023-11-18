@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 import { messageSchema } from "@/server/schema/messages/message.schema";
-import { pusherServer } from "@/lib/pusher";
+import { events, pusherServer } from "@/lib/pusher";
 import { Message } from "@prisma/client";
 
 const MESSAGE_BATCH: number = 10;
@@ -77,7 +77,7 @@ export async function GET(request: Request) {
     if (!messages) {
       return new NextResponse(
         "querying for messages failed, please try again later",
-        { status: 501 },
+        { status: 501 }
       );
     }
 
@@ -158,15 +158,22 @@ export async function POST(request: Request) {
         channelId: channel.id,
         serverId: server.id,
       },
+      include: {
+        member: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
 
     if (!message) {
       return new NextResponse("failed to create a message", { status: 500 });
     }
 
-    const pusherChannelKey = `chat-${channel.id}-messages`;
+    const pusherChannelKey = channel.id;
 
-    await pusherServer.trigger(pusherChannelKey, "message:new", message);
+    await pusherServer.trigger(pusherChannelKey, events.addMessage, message);
 
     return new NextResponse("message created", { status: 201 });
   } catch (error) {

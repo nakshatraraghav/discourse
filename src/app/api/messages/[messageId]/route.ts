@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 
 import { messageUpdateSchema } from "@/server/schema/messages/message.schema";
 import { ZodError } from "zod";
+import { events, pusherServer } from "@/lib/pusher";
 
 export async function PUT(request: Request) {
   try {
@@ -70,11 +71,26 @@ export async function PUT(request: Request) {
         data: {
           text: updatedText,
         },
+        include: {
+          member: {
+            include: {
+              user: true,
+            },
+          },
+        },
       });
 
       if (!updatedText) {
         return new NextResponse("failed to update message", { status: 500 });
       }
+
+      const pusherChannelKey = message.channelId;
+
+      await pusherServer.trigger(
+        pusherChannelKey,
+        events.addMessage,
+        updatedMessage
+      );
 
       return new NextResponse("message updated", { status: 201 });
     }
@@ -175,7 +191,18 @@ export async function DELETE(request: Request) {
         text: "",
         deleted: true,
       },
+      include: {
+        member: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
+
+    const pusherChannelKey = message.channelId;
+
+    await pusherServer.trigger(pusherChannelKey, events.updateMessage, deleted);
 
     return new NextResponse("message deleted", { status: 201 });
   } catch (error) {
